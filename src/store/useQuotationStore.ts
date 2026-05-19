@@ -30,9 +30,8 @@ interface QuotationState {
   toggleService: (dayId: string, serviceName: string) => void
   updateServiceQuantity: (dayId: string, serviceName: string, quantity: number) => void
 
-  addPostProductionItem: (name: string) => void
-  removePostProductionItem: (id: string) => void
-  updatePostProductionItem: (id: string, name: string) => void
+  togglePostProduction: (name: string) => void
+  updatePostProductionQuantity: (name: string, quantity: number) => void
 
   setPackageCost: (cost: string) => void
   loadSampleData: () => void
@@ -106,20 +105,19 @@ export const useQuotationStore = create<QuotationState>((set) => ({
       }),
     })),
 
-  addPostProductionItem: (name) =>
-    set((state) => ({
-      postProduction: [...state.postProduction, { id: genId(), name }],
-    })),
+  togglePostProduction: (name) =>
+    set((state) => {
+      const exists = state.postProduction.find((p) => p.name === name)
+      if (exists) {
+        return { postProduction: state.postProduction.filter((p) => p.name !== name) }
+      }
+      return { postProduction: [...state.postProduction, { name, quantity: 1 }] }
+    }),
 
-  removePostProductionItem: (id) =>
-    set((state) => ({
-      postProduction: state.postProduction.filter((p) => p.id !== id),
-    })),
-
-  updatePostProductionItem: (id, name) =>
+  updatePostProductionQuantity: (name, quantity) =>
     set((state) => ({
       postProduction: state.postProduction.map((p) =>
-        p.id === id ? { ...p, name } : p
+        p.name === name ? { ...p, quantity: Math.max(1, quantity) } : p
       ),
     })),
 
@@ -133,7 +131,7 @@ export const useQuotationStore = create<QuotationState>((set) => ({
       location: 'Rajkot & Ahmedabad',
       eventDates: '21,22,23 Feb 2026',
       days: sampleDays.map((d) => ({ ...d, id: genId() })),
-      postProduction: samplePostProduction.map((p) => ({ ...p, id: genId() })),
+      postProduction: samplePostProduction.map((p) => ({ ...p })),
       packageCost: '₹3,15,000/-',
     }),
 

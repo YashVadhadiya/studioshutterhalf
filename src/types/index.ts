@@ -10,8 +10,8 @@ export interface Day {
 }
 
 export interface PostProductionItem {
-  id: string
   name: string
+  quantity: number
 }
 
 export interface QuotationData {

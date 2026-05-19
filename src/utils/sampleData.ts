@@ -1,10 +1,11 @@
 import type { Day, PostProductionItem } from '../types'
 
-const generateId = () => Math.random().toString(36).substring(2, 9)
+let idCounter = 0
+const genId = () => `samp_${++idCounter}_${Math.random().toString(36).slice(2, 6)}`
 
 export const sampleDays: Day[] = [
   {
-    id: generateId(),
+    id: genId(),
     label: 'DAY 1',
     services: [
       { name: 'Cinematographer', quantity: 1 },
@@ -16,7 +17,7 @@ export const sampleDays: Day[] = [
     ],
   },
   {
-    id: generateId(),
+    id: genId(),
     label: 'DAY 2',
     services: [
       { name: 'Cinematographer', quantity: 1 },
@@ -27,7 +28,7 @@ export const sampleDays: Day[] = [
     ],
   },
   {
-    id: generateId(),
+    id: genId(),
     label: 'DAY 3',
     services: [
       { name: 'Cinematographer', quantity: 1 },
@@ -39,14 +40,12 @@ export const sampleDays: Day[] = [
 ]
 
 export const samplePostProduction: PostProductionItem[] = [
-  { id: generateId(), name: '1 Cinematic Teaser' },
-  { id: generateId(), name: '1 Cinematic Highlight' },
-  { id: generateId(), name: 'Teaser 40 to 50 seconds' },
-  { id: generateId(), name: 'Highlight 4 to 5 Minutes' },
-  { id: generateId(), name: '1 Ritual Video' },
-  { id: generateId(), name: '15/20 Minutes' },
-  { id: generateId(), name: '1 Short Film' },
-  { id: generateId(), name: 'Edited Photos' },
-  { id: generateId(), name: '1 Wedding Magazine (Small Complimentary)' },
-  { id: generateId(), name: 'Album 2 x 12*30 (30 Sheets Per Album)' },
+  { name: 'Cinematic Highlight', quantity: 1 },
+  { name: 'Cinematic Teaser', quantity: 1 },
+  { name: 'Short Film', quantity: 1 },
+  { name: 'Ritual Video', quantity: 1 },
+  { name: 'Edited Photos', quantity: 1 },
+  { name: 'Wedding Magazine', quantity: 1 },
+  { name: 'Instagram Reels', quantity: 2 },
+  { name: 'Wedding Album', quantity: 2 },
 ]

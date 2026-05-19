@@ -25,15 +25,23 @@ export function PreviewPostProduction() {
 
         <div className="grid grid-cols-2 gap-x-10 gap-y-2">
           {leftCol.map((item) => (
-            <div key={item.id} className="flex items-center gap-3 py-2 border-b border-ink-50">
+            <div key={item.name} className="flex items-center gap-3 py-2 border-b border-ink-50">
               <div className="w-1.5 h-1.5 rounded-full bg-brand-400 shrink-0" />
-              <span className="text-sm text-ink-700">{item.name}</span>
+              <span className="flex-1 text-sm text-ink-700">{item.name}</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] text-ink-400 uppercase tracking-wider">Qty:</span>
+                <span className="text-sm font-semibold text-ink-800 tabular-nums">{item.quantity}</span>
+              </div>
             </div>
           ))}
           {rightCol.map((item) => (
-            <div key={item.id} className="flex items-center gap-3 py-2 border-b border-ink-50">
+            <div key={item.name} className="flex items-center gap-3 py-2 border-b border-ink-50">
               <div className="w-1.5 h-1.5 rounded-full bg-brand-400 shrink-0" />
-              <span className="text-sm text-ink-700">{item.name}</span>
+              <span className="flex-1 text-sm text-ink-700">{item.name}</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] text-ink-400 uppercase tracking-wider">Qty:</span>
+                <span className="text-sm font-semibold text-ink-800 tabular-nums">{item.quantity}</span>
+              </div>
             </div>
           ))}
         </div>

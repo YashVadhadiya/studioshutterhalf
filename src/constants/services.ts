@@ -15,17 +15,21 @@ export const AVAILABLE_SERVICES: AvailableService[] = [
   { name: 'LED Wall', category: 'Equipment' },
 ]
 
-export const POST_PRODUCTION_TEMPLATES = [
-  'Cinematic Teaser',
-  'Cinematic Highlight',
-  'Short Film',
-  'Edited Photos',
-  'Wedding Album',
-  'Wedding Magazine',
-  'Instagram Reels',
-  'Raw Data',
-  'Ritual Video',
-  'Highlight Video',
+export const AVAILABLE_POST_PRODUCTION = [
+  { name: 'Cinematic Teaser', category: 'Video' },
+  { name: 'Cinematic Highlight', category: 'Video' },
+  { name: 'Short Film', category: 'Video' },
+  { name: 'Ritual Video', category: 'Video' },
+  { name: 'Highlight Video', category: 'Video' },
+  { name: 'Instagram Reels', category: 'Video' },
+  { name: 'Edited Photos', category: 'Photo' },
+  { name: 'Wedding Album', category: 'Print' },
+  { name: 'Wedding Magazine', category: 'Print' },
+  { name: 'Photo Book', category: 'Print' },
+  { name: 'Raw Data Delivery', category: 'Data' },
+  { name: 'Digital Gallery', category: 'Online' },
+  { name: 'Same Day Edit', category: 'Video' },
+  { name: 'Pre-Wedding Film', category: 'Video' },
 ]
 
 export const DAY_LABEL_PRESETS = [

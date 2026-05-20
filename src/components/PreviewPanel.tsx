@@ -26,8 +26,8 @@ export function PreviewPanel() {
             <p className="text-xs text-ink-400 truncate">Review the complete quotation before downloading</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" onClick={() => setCurrentStep(currentStep - 1)}>
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <Button variant="ghost" size="sm" onClick={() => setCurrentStep(currentStep - 1)} className="flex-1 sm:flex-none">
             <ArrowLeft className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Back to Edit</span>
           </Button>

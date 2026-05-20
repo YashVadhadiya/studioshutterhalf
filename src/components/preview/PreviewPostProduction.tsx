@@ -1,5 +1,6 @@
 import { useQuotationStore } from '../../store/useQuotationStore'
 import { usePageNumber } from './PageNumberContext'
+import { BASE_URL } from '../../utils/baseUrl'
 
 export function PreviewPostProduction() {
   const pageNum = usePageNumber()
@@ -10,11 +11,18 @@ export function PreviewPostProduction() {
   return (
     <div data-preview-page className="preview-page">
       <div className="preview-page-inner">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-1 h-8 bg-brand-400 rounded-full" />
-          <h2 className="text-xl font-display font-semibold text-ink-800 tracking-wide">
-            Post Production
-          </h2>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-1 h-8 bg-brand-400 rounded-full" />
+            <h2 className="text-xl font-display font-semibold text-ink-800 tracking-wide">
+              Post Production
+            </h2>
+          </div>
+          <img
+            src={`${BASE_URL}logo.svg`}
+            alt="Studio Shutter Half"
+            className="h-7 w-auto opacity-80"
+          />
         </div>
 
         <div className="w-full gold-divider mb-8" />

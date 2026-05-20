@@ -1,5 +1,6 @@
 import { useQuotationStore } from '../../store/useQuotationStore'
 import { usePageNumber } from './PageNumberContext'
+import { BASE_URL } from '../../utils/baseUrl'
 
 export function PreviewPricing() {
   const pageNum = usePageNumber()
@@ -16,7 +17,7 @@ export function PreviewPricing() {
             </h2>
           </div>
           <img
-            src="/studioshutterhalf/logo.svg"
+            src={`${BASE_URL}logo.svg`}
             alt="Studio Shutter Half"
             className="h-7 w-auto opacity-80"
           />

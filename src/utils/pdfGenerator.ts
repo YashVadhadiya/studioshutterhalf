@@ -4,7 +4,6 @@ import jsPDF from 'jspdf'
 import { PDFDocument } from 'pdf-lib'
 import { BASE_URL } from './baseUrl'
 
-const A4_WIDTH_MM = 210
 const CANVAS_SCALE = 2
 
 async function fetchPDFBuffer(path: string): Promise<ArrayBuffer> {
@@ -31,6 +30,31 @@ async function captureToCanvas(el: HTMLElement): Promise<HTMLCanvasElement> {
   return canvas
 }
 
+function cropToRatio(canvas: HTMLCanvasElement, ratio: number): HTMLCanvasElement {
+  const currRatio = canvas.width / canvas.height
+  if (Math.abs(currRatio - ratio) < 0.005) return canvas
+
+  let sx: number, sy: number, sw: number, sh: number
+  if (currRatio > ratio) {
+    sh = canvas.height
+    sw = sh * ratio
+    sx = (canvas.width - sw) / 2
+    sy = 0
+  } else {
+    sw = canvas.width
+    sh = sw / ratio
+    sx = 0
+    sy = (canvas.height - sh) / 2
+  }
+
+  const temp = document.createElement('canvas')
+  temp.width = Math.round(sw)
+  temp.height = Math.round(sh)
+  const ctx = temp.getContext('2d')!
+  ctx.drawImage(canvas, sx, sy, sw, sh, 0, 0, sw, sh)
+  return temp
+}
+
 export async function generatePDF(previewRef: RefObject<HTMLDivElement | null>, clientName?: string): Promise<void> {
   const container = previewRef.current
   if (!container) return
@@ -40,35 +64,36 @@ export async function generatePDF(previewRef: RefObject<HTMLDivElement | null>, 
 
   const middleElements = Array.from(allPages)
 
-  const middlePdf = new jsPDF('p', 'mm', 'a4')
-
-  for (let i = 0; i < middleElements.length; i++) {
-    const canvas = await captureToCanvas(middleElements[i])
-    const imgData = canvas.toDataURL('image/jpeg', 0.92)
-
-    if (i > 0) middlePdf.addPage()
-
-    const imgWidth = A4_WIDTH_MM
-    const imgHeight = (canvas.height / canvas.width) * imgWidth
-    middlePdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight, undefined, 'FAST')
-  }
-
-  const middleBytes = middlePdf.output('arraybuffer')
-
   const [startBytes, endBytes] = await Promise.all([
     fetchPDFBuffer(`${BASE_URL}quotation-start.pdf`),
     fetchPDFBuffer(`${BASE_URL}quotation-end.pdf`),
   ])
 
-  const mergedPdf = await PDFDocument.create()
   const startDoc = await PDFDocument.load(startBytes, { ignoreEncryption: true })
   const endDoc = await PDFDocument.load(endBytes, { ignoreEncryption: true })
-  const middleDoc = await PDFDocument.load(middleBytes)
 
-  const [targetW, targetH] = (() => {
-    const first = startDoc.getPage(0)
-    return [first.getWidth(), first.getHeight()]
-  })()
+  const firstPage = startDoc.getPage(0)
+  const targetW = firstPage.getWidth()
+  const targetH = firstPage.getHeight()
+  const targetRatio = targetW / targetH
+
+  const orientation = targetW > targetH ? 'l' : 'p'
+  const middlePdf = new jsPDF({ orientation, unit: 'pt', format: [targetW, targetH] })
+
+  for (let i = 0; i < middleElements.length; i++) {
+    const canvas = await captureToCanvas(middleElements[i])
+    const cropped = cropToRatio(canvas, targetRatio)
+    const imgData = cropped.toDataURL('image/jpeg', 0.92)
+
+    if (i > 0) middlePdf.addPage([targetW, targetH])
+
+    middlePdf.addImage(imgData, 'JPEG', 0, 0, targetW, targetH, undefined, 'FAST')
+  }
+
+  const middleBytes = middlePdf.output('arraybuffer')
+
+  const mergedPdf = await PDFDocument.create()
+  const middleDoc = await PDFDocument.load(middleBytes)
 
   const startPages = await mergedPdf.copyPages(startDoc, startDoc.getPageIndices())
   for (const page of startPages) mergedPdf.addPage(page)

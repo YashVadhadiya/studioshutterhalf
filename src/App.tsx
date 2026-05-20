@@ -32,7 +32,7 @@ export default function App() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
             <img
-              src={`${BASE_URL}logo.svg`}
+              src={`${BASE_URL}logo.png`}
               alt="Studio Shutter Half"
               className="h-9 sm:h-10 w-auto shrink-0"
             />

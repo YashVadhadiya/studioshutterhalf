@@ -11,17 +11,26 @@ export interface SheetPayload {
   packageCost: string
 }
 
-const SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwRys-kG1TTNJz3HE8Zx3--4qT7QYlBVBGQYcS5dNa4TJTGKqk0n9FtN7qit_Z0LQ6i/exec'
+const SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwi9Pr89jFmDIcEuJpRP41hhTHmIZN3uGBkSSBdAPokVhZ4hVuTrcPKAgDSgjCjokuvRw/exec'
 
-export async function submitToSheet(data: SheetPayload): Promise<void> {
+export async function submitToSheet(data: SheetPayload): Promise<{ success: boolean }> {
   try {
-    await fetch(SHEET_WEBHOOK_URL, {
+    const res = await fetch(SHEET_WEBHOOK_URL, {
       method: 'POST',
-      mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(data),
     })
-  } catch {
-    // Silently fail — sheet logging is non-critical
+
+    if (!res.ok) {
+      console.warn(`[Sheet] Server returned ${res.status}: ${res.statusText}`)
+      return { success: false }
+    }
+
+    const result = await res.json()
+    console.log('[Sheet] Quotation logged successfully:', result)
+    return { success: true }
+  } catch (err) {
+    console.error('[Sheet] Failed to log quotation:', err)
+    return { success: false }
   }
 }

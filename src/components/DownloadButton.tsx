@@ -21,15 +21,19 @@ export function DownloadButton({ previewRef }: DownloadButtonProps) {
         eventDates, days, postProduction, packageCost,
       } = store
 
-      await Promise.all([
+      const [_, sheetResult] = await Promise.all([
         generatePDF(previewRef, clientName),
         submitToSheet({
           clientName, contactNumber, venue, location,
           eventDates, days, postProduction, packageCost,
         }),
       ])
+
+      if (!sheetResult.success) {
+        console.warn('[Sheet] Quotation was not logged to Google Sheets')
+      }
     } catch (err) {
-      console.error('PDF generation failed:', err)
+      console.error('Download process failed:', err)
     } finally {
       setLoading(false)
     }

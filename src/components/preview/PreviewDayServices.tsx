@@ -61,7 +61,7 @@ function BatchPage({ batch, allDays }: {
             </h2>
           </div>
           <img
-            src={`${BASE_URL}logo.svg`}
+            src={`${BASE_URL}logo.png`}
             alt="Studio Shutter Half"
             className="h-7 w-auto opacity-80"
           />

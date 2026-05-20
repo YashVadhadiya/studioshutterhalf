@@ -8,6 +8,8 @@ export const AVAILABLE_SERVICES: AvailableService[] = [
   { name: 'Drone', category: 'Equipment' },
   { name: 'Live Setup', category: 'Equipment' },
   { name: 'FPV Drone', category: 'Equipment' },
+  { name: 'Family Photographer', category: 'Photo' },
+  { name: 'Family Videographer', category: 'Video' },
 ]
 
 export const AVAILABLE_POST_PRODUCTION: AvailablePostProduction[] = [

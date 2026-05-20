@@ -34,8 +34,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Playfair Display"', '"Cormorant Garamond"', 'Georgia', 'serif'],
+        body: ['"Century Gothic"', 'CenturyGothic', '"Apple Gothic"', 'Inter', 'sans-serif'],
       },
       spacing: {
         '18': '4.5rem',

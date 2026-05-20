@@ -56,7 +56,7 @@ function BatchPage({ batch, allDays }: {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="w-1 h-8 bg-brand-400 rounded-full" />
-            <h2 className="text-xl font-display font-semibold text-ink-800 tracking-wide">
+            <h2 className="text-2xl font-display font-bold text-ink-800 tracking-wide">
               Event Coverage
             </h2>
           </div>
@@ -78,7 +78,7 @@ function BatchPage({ batch, allDays }: {
                     {allDays.findIndex((d) => d.label === day.label) + 1}
                   </span>
                 </div>
-                <h3 className="text-base font-display font-semibold text-ink-800 tracking-wide">
+                <h3 className="text-lg font-display font-bold text-ink-800 tracking-wide">
                   {day.label}
                 </h3>
               </div>
@@ -90,10 +90,10 @@ function BatchPage({ batch, allDays }: {
                     className="flex items-center gap-3 py-2 px-3 rounded-lg bg-ink-50/50"
                   >
                     <span className="text-base">{svcIcons[svc.name] || '📋'}</span>
-                    <span className="flex-1 text-sm text-ink-700">{svc.name}</span>
+                    <span className="flex-1 text-sm font-medium text-ink-800">{svc.name}</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-ink-400">Qty:</span>
-                      <span className="text-sm font-semibold text-ink-800 tabular-nums">
+                      <span className="text-xs text-ink-500 font-medium">Qty:</span>
+                      <span className="text-sm font-bold text-ink-800 tabular-nums">
                         {svc.quantity}
                       </span>
                     </div>

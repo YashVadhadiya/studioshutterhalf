@@ -7,10 +7,6 @@ export function PreviewPostProduction() {
 
   if (items.length === 0) return null
 
-  const mid = Math.ceil(items.length / 2)
-  const leftCol = items.slice(0, mid)
-  const rightCol = items.slice(mid)
-
   return (
     <div data-preview-page className="preview-page">
       <div className="preview-page-inner">
@@ -23,22 +19,8 @@ export function PreviewPostProduction() {
 
         <div className="w-full gold-divider mb-8" />
 
-        <div className="grid grid-cols-2 gap-x-10 gap-y-2">
-          {leftCol.map((item) => (
-            <div key={item.name} className="flex items-center gap-3 py-2 border-b border-ink-50">
-              <div className="w-1.5 h-1.5 rounded-full bg-brand-400 shrink-0" />
-              <span className="flex-1 text-sm text-ink-700">{item.name}</span>
-              {item.value > 0 && (
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] text-ink-400 uppercase tracking-wider">Approx</span>
-                  <span className="text-sm font-semibold text-ink-800 tabular-nums">
-                    {item.value}{item.unit ? ` ${item.unit}` : ''}
-                  </span>
-                </div>
-              )}
-            </div>
-          ))}
-          {rightCol.map((item) => (
+        <div className="space-y-1">
+          {items.map((item) => (
             <div key={item.name} className="flex items-center gap-3 py-2 border-b border-ink-50">
               <div className="w-1.5 h-1.5 rounded-full bg-brand-400 shrink-0" />
               <span className="flex-1 text-sm text-ink-700">{item.name}</span>

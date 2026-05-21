@@ -46,7 +46,7 @@ function BatchPage({ batch }: {
           <div className="flex items-center gap-3">
             <div className="w-1 h-8 bg-brand-400 rounded-full" />
             <h2 className="text-3xl font-display font-bold text-ink-800 tracking-wide">
-              Event Coverage
+              Pre Production
             </h2>
           </div>
           <img

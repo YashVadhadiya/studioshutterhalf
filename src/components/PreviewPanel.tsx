@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useQuotationStore } from '../store/useQuotationStore'
 import { PageProvider } from './preview/PageNumberContext'
 import { PreviewClientInfo } from './preview/PreviewClientInfo'
@@ -8,10 +8,29 @@ import { DownloadButton } from './DownloadButton'
 import { Button } from './ui/Button'
 import { ArrowLeft, Eye } from 'lucide-react'
 
+const A4_WIDTH_PX = 793.7
+
 export function PreviewPanel() {
   const currentStep = useQuotationStore((s) => s.currentStep)
   const setCurrentStep = useQuotationStore((s) => s.setCurrentStep)
   const previewRef = useRef<HTMLDivElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const [scale, setScale] = useState(1)
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const width = entry.contentBoxSize?.[0]?.inlineSize ?? entry.contentRect.width
+        setScale(Math.min(width / A4_WIDTH_PX, 1))
+      }
+    })
+
+    observer.observe(wrapper)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="space-y-6">
@@ -34,8 +53,8 @@ export function PreviewPanel() {
         </div>
       </div>
 
-      <div className="preview-scroll-wrap">
-        <div ref={previewRef} className="space-y-8 pb-8">
+      <div ref={wrapperRef} className="preview-page-wrapper">
+        <div ref={previewRef} className="space-y-8 pb-8" style={{ '--preview-scale': scale } as React.CSSProperties}>
           <PageProvider>
             <PreviewClientInfo />
             <PreviewDayServices />

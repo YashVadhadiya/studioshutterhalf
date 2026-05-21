@@ -28,6 +28,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    transform-origin: top left;
+    transform: scale(var(--preview-scale, 1));
   }
 
   .preview-page-inner {
@@ -40,10 +42,11 @@
     z-index: 1;
   }
 
-  .preview-scroll-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 16px;
+  .preview-page-wrapper {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
   }
 
   .gold-divider {

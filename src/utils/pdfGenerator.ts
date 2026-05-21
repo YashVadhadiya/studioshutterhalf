@@ -14,7 +14,11 @@ async function fetchPDFBuffer(path: string): Promise<ArrayBuffer> {
 
 async function captureToCanvas(el: HTMLElement): Promise<HTMLCanvasElement> {
   const originalOverflow = el.style.overflow
+  const originalTransform = el.style.transform
+  const originalScale = el.style.getPropertyValue('--preview-scale')
   el.style.overflow = 'visible'
+  el.style.transform = 'none'
+  el.style.setProperty('--preview-scale', '1')
 
   const canvas = await html2canvas(el, {
     scale: CANVAS_SCALE,
@@ -27,6 +31,8 @@ async function captureToCanvas(el: HTMLElement): Promise<HTMLCanvasElement> {
   })
 
   el.style.overflow = originalOverflow
+  el.style.transform = originalTransform
+  el.style.setProperty('--preview-scale', originalScale)
   return canvas
 }
 
